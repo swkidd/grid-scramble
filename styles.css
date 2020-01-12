@@ -1,0 +1,85 @@
+body {
+    background-color: #352198;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#timer {
+	color: white;
+}
+.grid-container {
+	display: grid;
+	grid-gap: 1px;
+	grid-template-columns: repeat(3, 4em);
+	grid-template-rows: repeat(4, 4em);
+}
+
+.item {
+    background-color: #12cc33;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4em;
+    color: white;
+}
+
+.exit-right {
+    animation-name: exit-right;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+    animation-timing-function: cubic-bezier(1,1.1,0,1);
+}
+
+@keyframes exit-right {
+    0% { transform: translate(0%, 0); } 
+    100% { transform: translate(1000%, 0); }
+}
+
+.exit-left {
+    animation-name: exit-left;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+    animation-timing-function: cubic-bezier(1,1.1,0,1);
+}
+
+@keyframes exit-left {
+    0% { transform: translate(0%, 0); } 
+    100% { transform: translate(-1000%, 0); }
+}
+
+.exit-down {
+    animation-name: exit-down;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+    animation-timing-function: cubic-bezier(1,1.1,0,1);
+}
+
+@keyframes exit-down {
+    0% { transform: translate(0, 0%); } 
+    100% { transform: translate(0, 1000%); }
+}
+
+.exit-up {
+    animation-name: exit-up;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+    animation-timing-function: cubic-bezier(1,1.1,0,1);
+}
+
+@keyframes exit-up {
+    0% { transform: translate(0, 0%); } 
+    100% { transform: translate(0, -1000%); }
+}
+
+.exit-in {
+    animation-name: exit-in;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+    animation-timing-function: cubic-bezier(1,1.1,0,1);
+}
+
+@keyframes exit-in {
+    0% { transform: scale(1); } 
+    100% { transform: scale(0); }
+}
