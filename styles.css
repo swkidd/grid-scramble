@@ -5,9 +5,15 @@ body {
     justify-content: center;
     align-items: center;
 }
+
+#kanji {
+	color: white;
+}
+
 #timer {
 	color: white;
 }
+
 .grid-container {
 	display: grid;
 	grid-gap: 1px;

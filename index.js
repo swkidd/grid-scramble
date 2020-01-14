@@ -32,11 +32,30 @@ const dirClassNames = {
 const dirNames = Object.keys(dirClassNames);
 const exitNames = Object.values(dirClassNames);
 
-var currentGoal = {
-	item: null,
-	direction: '',
+/* kanji */
+
+let kanji = document.getElementById("kanji");
+const kanjiList = [
+	{ character: "\u65e5", target: [{ item: "item23", direction: "left"}] }, 
+	{ character: "\u6c17", target: [{ item: "item12", direction: "left"}] }, 
+]
+
+const randKanji = () => {
+	let randIndex = Math.trunc(Math.random() * kanjiList.length);
+	return kanjiList[randIndex];
 }
 
+/* --- */
+
+var currentGoal = {
+	kanji: null,
+	item: null,
+	direction: null,
+	length: 0,
+	index: 0,
+}
+
+/*
 const randItem = () => {
 	let randIndex = Math.trunc(Math.random() * gridIdList.length);
 	return gridIdList[randIndex];
@@ -46,12 +65,33 @@ const randDirection = () => {
 	let randIndex = Math.trunc(Math.random() * dirNames.length);
 	return dirNames[randIndex];
 }
+*/
+
+const newKanji = () => {
+	let k = randKanji();
+	return { 
+		kanji: k, 
+		index: 0, 
+		item: k.target[0].item, 
+		direction: k.target[0].direction, 
+		length: k.target.length
+	}
+}
+
+
 
 const newGoal = () => {
 	if (currentGoal.item) {
 	    document.getElementById(currentGoal.item).innerText = "";
 	}
-	currentGoal = { item: randItem(), direction: randDirection() };
+	if (currentGoal.kanji === null || currentGoal.index === currentGoal.length - 1) {
+		currentGoal = newKanji();	
+	} else {
+		let i = currentGoal.index
+		let t = currentGoal.kanji.target[i + 1];
+		currentGoal = {...currentGoal, index: i + 1, item: t.item, direction: t.direction } 
+	}
+        document.getElementById("kanji").innerText = currentGoal.kanji.character;
         document.getElementById(currentGoal.item).innerText = currentGoal.direction[0];
 }
 
@@ -95,9 +135,12 @@ document.addEventListener('keydown', function(e){
 		handleSwipe(gridId(), "down");
 	} else if (!keysClear() && e.code === "Space") {
 		handleSwipe(gridId(), "in");
-	} else if (gridKeyCodes.includes(e.code)) {
+	} else if (!gridKeys.includes(e.code) && gridKeyCodes.includes(e.code)) {
 		gridKeys.push(e.code);
 	}
 });
 
 newGoal();
+
+
+
