@@ -1,5 +1,5 @@
 body {
-    background-color: #352198;
+    background-color: #355598;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -7,6 +7,8 @@ body {
 }
 
 #kanji {
+	margin: 0;
+	font-size: 10em;
 	color: white;
 }
 
@@ -22,11 +24,13 @@ body {
 }
 
 .item {
-    background-color: #12cc33;
+    background-color: #123333;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 4em;
+    font-size: 3em;
+    margin: 0;
+    padding: 0;
     color: white;
 }
 

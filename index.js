@@ -1,9 +1,9 @@
 var numRounds = 0;
-var startTime = Date.now();
+/*var startTime = Date.now();
 var interval = setInterval(function() {
 	var elapsedTime = Date.now() - startTime;
 	document.getElementById("timer").innerHTML = (elapsedTime / 1000).toFixed(1);
-}, 100);
+}, 100);*/
 
 var gridKeys = [];
 const gridKeyCodes = ["Digit1","Digit2","Digit3","KeyQ","KeyW","KeyE","KeyA","KeyS","KeyD","KeyZ","KeyX","KeyC",];
@@ -32,12 +32,27 @@ const dirClassNames = {
 const dirNames = Object.keys(dirClassNames);
 const exitNames = Object.values(dirClassNames);
 
+const dirArrows = {
+	"up": "\u21e7",
+	"left": "\u21e6",
+	"right": "\u21e8",
+	"down": "\u21e9",
+	"in": "\u2b22"
+}
+
 /* kanji */
 
 let kanji = document.getElementById("kanji");
 const kanjiList = [
 	{ character: "\u65e5", target: [{ item: "item23", direction: "left"}] }, 
 	{ character: "\u6c17", target: [{ item: "item12", direction: "left"}] }, 
+	{ character: "\u540d", target: [{ item: "item22", direction: "in"}] }, 
+	{ character: "\u6642", target: [{ item: "item21", direction: "down"}, { item: "item12", direction: "left"}] }, 
+	{ character: "\u5e74", target: [{ item: "item21", direction: "down"}, { item: "item13", direction: "left"}] }, 
+	{ character: "\u540c", target: [{ item: "item21", direction: "down"}, { item: "item42", direction: "in"}, { item: "item11", direction: "up" }] }, 
+	{ character: "\u4f1a", target: [{ item: "item11", direction: "in"}, { item: "item11", direction: "left"}] }, 
+	{ character: "\u81ea", target: [{ item: "item13", direction: "left"}, { item: "item42", direction: "in"}] }, 
+	{ character: "\u8005", target: [{ item: "item13", direction: "left"}, { item: "item32", direction: "in"}, { item: "item41", direction: "in"}] }, 
 ]
 
 const randKanji = () => {
@@ -67,8 +82,19 @@ const randDirection = () => {
 }
 */
 
+var show = true;
 const newKanji = () => {
+	let ck = currentGoal.kanji;
 	let k = randKanji();
+	while (ck && k.character === ck.character) {
+		k = randKanji();
+	}
+        if (numRounds == 10) {
+		numRounds = 0;
+		show = !show;
+	} else {
+		++numRounds;
+	}
 	return { 
 		kanji: k, 
 		index: 0, 
@@ -77,8 +103,6 @@ const newKanji = () => {
 		length: k.target.length
 	}
 }
-
-
 
 const newGoal = () => {
 	if (currentGoal.item) {
@@ -92,7 +116,7 @@ const newGoal = () => {
 		currentGoal = {...currentGoal, index: i + 1, item: t.item, direction: t.direction } 
 	}
         document.getElementById("kanji").innerText = currentGoal.kanji.character;
-        document.getElementById(currentGoal.item).innerText = currentGoal.direction[0];
+        show && (document.getElementById(currentGoal.item).innerText = dirArrows[currentGoal.direction]);
 }
 
 
@@ -108,11 +132,10 @@ const handleSwipe = (gridId, direction) => {
 			element.classList.add(dirClassNames[direction]);
 		});
 		newGoal();
-		++numRounds;
 	} else if (numRounds == 10) {
-		clearInterval(interval);
-	        document.getElementById(currentGoal.item).innerText = "";
-		currentGoal = {};
+		//clearInterval(interval);
+	        show && (document.getElementById(currentGoal.item).innerText = "");
+		newGoal();
 	}
 }
 
